@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: portfolio_user
+      MYSQL_PASSWORD: portfolio_password
+      MYSQL_ROOT_PASSWORD: 'root' 
+      TZ: UTC
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  phpmyadmin:
+    image: phpmyadmin:5.2.2
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_LIMIT: 50M
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: 'root'
+    depends_on:
+      db: 
+        condition: service_healthy
+volumes:
+  db_data:
