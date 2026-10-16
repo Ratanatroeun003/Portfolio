@@ -1,5 +1,5 @@
 import React from 'react';
-import profile from '@/public/images/meme.jpg';
+import profile from '@/public/myPic.jpg';
 import { FaTelegramPlane, FaGithub, FaPhone, FaFacebook } from 'react-icons/fa';
 import Image from 'next/image';
 
